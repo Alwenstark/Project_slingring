@@ -1,7 +1,20 @@
 import socket
 import subprocess
 import os
+import time
 
+def show_intro_animation():
+    try:
+        os.system("clear")
+        subprocess.Popen("cmatrix -u 3", shell=True)
+        time.sleep(2)
+        os.system("pkill cmatrix") 
+        os.system("clear")
+        subprocess.run('figlet "SLINGRING" | lolcat', shell=True)
+        time.sleep(1)
+    except Exception as e:
+        print(f"Animation error: {e}")
+        
 def start_listener():
     host = input("Enter the IP to bind: ")
     port = int(input("Enter the port to listen on: "))
@@ -105,6 +118,7 @@ def start_client():
     client.close()
 
 if __name__ == "__main__":
+    show_intro_animation()
     choice = input("Do you want to be a listener (server) or a client? (l/c): ").strip().lower()
     if choice == "l":
         start_listener()
