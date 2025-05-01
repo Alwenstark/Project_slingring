@@ -16,6 +16,8 @@ SlingRing is a Python-based remote shell that allows command execution on a remo
 1. Clone the repository:
    ```sh
    git clone https://github.com/Alwenstark/Project_slingring.git
+   sudo apt-get update
+   sudo apt-get install figlet lolcat cmatrix
    cd Project_slingring
    ```
 
