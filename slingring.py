@@ -1,70 +1,12 @@
 import socket
 import subprocess
 import os
-import curses
-import time
-import random
-
-# Portal animation frames
-PORTAL_FRAMES = [
-    ["     ( )     ",
-     "    (   )    ",
-     "   (     )   ",
-     "    (   )    ",
-     "     ( )     "],
-
-    ["     { }     ",
-     "    {   }    ",
-     "   {     }   ",
-     "    {   }    ",
-     "     { }     "],
-
-    ["     [ ]     ",
-     "    [   ]    ",
-     "   [     ]   ",
-     "    [   ]    ",
-     "     [ ]     "],
-
-    ["     < >     ",
-     "    <   >    ",
-     "   <     >   ",
-     "    <   >    ",
-     "     < >     "]
-]
-
-def animate_portal(stdscr):
-    curses.curs_set(0)  # Hide cursor
-    stdscr.nodelay(1)   # Non-blocking input
-    stdscr.timeout(100)
-
-    height, width = stdscr.getmaxyx()
-    portal_x = width // 2 - 6
-    portal_y = height // 2 - 2
-
-    frame = 0
-    while True:
-        stdscr.clear()
-        
-        # Print animated portal
-        for i, line in enumerate(PORTAL_FRAMES[frame]):
-            stdscr.addstr(portal_y + i, portal_x, line, curses.color_pair(1))
-
-        stdscr.refresh()
-        frame = (frame + 1) % len(PORTAL_FRAMES)  # Loop through frames
-        time.sleep(0.1)
-
-        key = stdscr.getch()
-        if key == ord('q'):  # Press 'q' to exit
-            break
-
-
-
 
 def start_listener():
     host = input("Enter the IP to bind: ")
     port = int(input("Enter the port to listen on: "))
     
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server = socket.socket()
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server.bind((host, port))
     server.listen(5)
@@ -163,7 +105,6 @@ def start_client():
     client.close()
 
 if __name__ == "__main__":
-    curses.wrapper(animate_portal)
     choice = input("Do you want to be a listener (server) or a client? (l/c): ").strip().lower()
     if choice == "l":
         start_listener()
